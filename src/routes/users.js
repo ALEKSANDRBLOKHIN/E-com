@@ -6,9 +6,17 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    console.log(req.body); 
-    res.send("User added");
+    const { firstName, email, password } = req.body;  
+    console.log(`Received data: First Name: ${firstName}, Email: ${email}, Password: ${password}`);
+
+    res.json({
+        firstName,
+        email,
+        password,
+        _id: "randomId4567"
+    });
 });
+
 
 router.put("/:id", (req, res) => {
     res.send(`User with ID ${req.params.id} updated`);
