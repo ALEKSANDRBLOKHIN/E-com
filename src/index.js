@@ -1,6 +1,8 @@
 const express = require("express");
 const test = require("./test");
 const userRoutes = require("./routes/users"); 
+const connectDB = require("./utils/db");
+
 
 const app = express();
 const port = 3000;
@@ -37,6 +39,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+
+connectDB();
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
