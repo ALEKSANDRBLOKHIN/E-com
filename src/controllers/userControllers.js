@@ -29,6 +29,6 @@ exports.userSignUp = async (req, res) => {
       
   } catch (error) {
     console.error("Ошибка при создании пользователя:", error);
-    res.status(500).json({ error: "Ошибка сервера при создании пользователя" });
+    res.status(400).json({ message: error.message });
   }
 };

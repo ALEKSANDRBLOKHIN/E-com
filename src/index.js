@@ -1,8 +1,7 @@
 const express = require("express");
 const test = require("./test");
-const userRoutes = require("./routes/users"); 
+const userRoutes = require("./routes/users");
 const connectDB = require("./utils/db");
-
 
 const app = express();
 const port = 3000;
@@ -10,7 +9,7 @@ const port = 3000;
 app.use(express.json());
 
 app.use((req, res, next) => {
-    test(); 
+    test();
     const now = Date.now();
     req.requestTime = now;
     console.log("Time:", now);
@@ -26,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*"); // Разрешаем доступ с любых источников
+    res.header("Access-Control-Allow-Origin", "*");
     res.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -35,14 +34,21 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Welcome to my API! e-commerce backed 🛍️");
+    res.send("Welcome to my API! e-commerce backend 🛍️");
 });
 
 app.use("/api/users", userRoutes);
 
-connectDB();
+// Запускаем сервер ТОЛЬКО после успешного подключения к БД
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(port, () => {
+            console.log(`Example app listening at http://localhost:${port}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+    }
+};
 
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-});
+startServer();

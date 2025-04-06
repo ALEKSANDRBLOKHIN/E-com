@@ -6,7 +6,8 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.12.2"
+    "mongoose": "^8.12.2",
+    "mongoose-unique-validator": "^4.0.1"
   },
   "scripts": {
     "start": "node index.js",
