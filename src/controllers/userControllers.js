@@ -2,33 +2,33 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-// Вход (логин)
+
 exports.userLogIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Проверка пользователя
+
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Пользователь не найден" });
+      return res.status(401).json({ message: "No user" });
     }
 
-    // Проверка пароля
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Неверный пароль" });
+      return res.status(401).json({ message: "wrong password" });
     }
 
-    // Генерация JWT токена
+
     const token = jwt.sign(
       { userId: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || "your_jwt_secret", // желательно вынести в .env
+      process.env.JWT_SECRET || "your_jwt_secret", 
       { expiresIn: "1h" }
     );
 
-    // Ответ
+
     res.status(200).json({
-      message: "Успешный вход",
+      message: "Graet you are loged in",
       token,
       user: {
         firstName: user.firstName,
@@ -37,8 +37,8 @@ exports.userLogIn = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Ошибка при входе пользователя:", error);
-    res.status(500).json({ message: "Ошибка сервера" });
+    console.error("Error in log in:", error);
+    res.status(500).json({ message: "serever error" });
   }
 };
 
@@ -60,7 +60,7 @@ exports.userSignUp = async (req, res) => {
     const savedUser = await newUser.save();
 
     res.status(201).json({
-      message: "Пользователь создан",
+      message: "Uer created",
       firstName: savedUser.firstName,
       email: savedUser.email,
       role: savedUser.role,
