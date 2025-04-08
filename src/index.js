@@ -2,7 +2,7 @@ const express = require("express");
 const test = require("./test");
 const userRoutes = require("./routes/users");
 const connectDB = require("./utils/db");
-
+const path = require("path");
 const app = express();
 const port = 3000;
 
@@ -39,7 +39,9 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRoutes);
 
-// Запускаем сервер ТОЛЬКО после успешного подключения к БД
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+
 const startServer = async () => {
     try {
         await connectDB();
@@ -50,5 +52,8 @@ const startServer = async () => {
         console.error("Failed to start server:", error);
     }
 };
+
+
+
 
 startServer();
