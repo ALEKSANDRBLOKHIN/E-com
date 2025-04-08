@@ -4,6 +4,7 @@ const { hashPassword } = require("../middleware/passencrypt");
 const { userLogIn, userSignUp } = require("../controllers/userControllers");
 const { verifyToken } = require("../middleware/auth");
 const upload = require("../middleware/multerConfig");
+const sharpMiddleware = require("../middleware/sharpMiddleware");
 
 
 
@@ -28,14 +29,16 @@ router.put(
     "/userUpdate",
     verifyToken,
     upload.single("image"),
+    sharpMiddleware("webp", 80), // <= тут!
     (req, res) => {
-      console.log(req.body);    
-      console.log(req.file);   
-      console.log(req.userId); 
+      console.log(req.body);
+      console.log(req.file); // теперь .webp
+      console.log(req.userId);
   
       res.json({ message: "User response reached" });
     }
   );
+  
   
   
 
