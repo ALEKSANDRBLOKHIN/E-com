@@ -1,7 +1,8 @@
 const express = require("express");
 const test = require("./test");
 const userRoutes = require("./routes/users");
-const productRoutes = require("./routes/products"); // ✅ Новый импорт
+const productRoutes = require("./routes/products");
+const invoiceRoutes = require("./routes/invoices"); 
 const connectDB = require("./utils/db");
 const path = require("path");
 const app = express();
@@ -39,7 +40,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
-app.use("/api/products", productRoutes); // ✅ Новый маршрут для продуктов
+app.use("/api/products", productRoutes);
+app.use("/api/invoices", invoiceRoutes); 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
