@@ -1,6 +1,7 @@
 const express = require("express");
 const test = require("./test");
 const userRoutes = require("./routes/users");
+const productRoutes = require("./routes/products"); // ✅ Новый импорт
 const connectDB = require("./utils/db");
 const path = require("path");
 const app = express();
@@ -38,9 +39,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes); // ✅ Новый маршрут для продуктов
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 
 const startServer = async () => {
     try {
@@ -52,8 +53,5 @@ const startServer = async () => {
         console.error("Failed to start server:", error);
     }
 };
-
-
-
 
 startServer();
